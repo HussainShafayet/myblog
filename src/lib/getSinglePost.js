@@ -1,4 +1,4 @@
-export default async function getPost(id) {
+export default async function getSinglePost(id) {
     const res = await fetch(`https://dummyjson.com/posts/${id}`, {
     });
     

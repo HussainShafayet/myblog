@@ -1,8 +1,9 @@
-import getBlog from "@/lib/getPosts"
+import getPosts from "@/lib/getPosts";
 import Link from "next/link";
 
 export default async function FeaturedPosts() {
-  const posts = await getBlog();
+  const postData = await getPosts(1);
+  const { posts } = postData;
 
   return (
     <section className="py-16 px-4 bg-zinc-50 dark:bg-zinc-900">

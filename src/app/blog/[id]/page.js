@@ -1,11 +1,11 @@
 import Comments from '@/components/Comments';
 import getComments from '@/lib/getComments';
-import getPost from '@/lib/getSinglePost';
+import getSinglePost from '@/lib/getSinglePost';
 import React, {Suspense} from 'react'
 
 const Blog = async ({params}) => {
     const { id } = params;
-    const post = await getPost(id);
+    const post = await getSinglePost(id);
 
     // const commentsRes = await fetch(`https://dummyjson.com/posts/${params.id}/comments`);
     const commentsData = getComments(id);

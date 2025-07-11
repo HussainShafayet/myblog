@@ -1,12 +1,22 @@
-export default async function getBlog() {
-    const res = await fetch('https://dummyjson.com/posts?limit=10', {
-      next: { revalidate: 60 }, // Revalidate every 60 seconds
-    });
+// lib/getPosts.js
+const LIMIT = 12
 
-    if (!res.ok) {
-      throw new Error('Failed to fetch posts');
-    }
+export default async function getPosts(page = 1) {
+  const skip = (page - 1) * LIMIT
+  const res = await fetch(`https://dummyjson.com/posts?limit=${LIMIT}&skip=${skip}`, {
+    next: { revalidate: 60 }, // Cache + SSR
+  })
 
-    const data = await res.json();
-    return data.posts;
+  if (!res.ok) {
+    throw new Error('Failed to fetch posts')
+  }
+
+  const data = await res.json()
+
+  return {
+    posts: data.posts,
+    total: data.total,
+    totalPages: Math.ceil(data.total / LIMIT),
+    page,
+  }
 }
