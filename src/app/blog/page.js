@@ -49,11 +49,11 @@ export default async function BlogPage({ searchParams }) {
               href={`/blog/${post.id}`}
               className="group bg-white dark:bg-zinc-800 rounded-xl p-5 shadow hover:shadow-lg border border-zinc-200 dark:border-zinc-700 transition"
             >
-              <img
+              {/*<img
                 src={`https://source.unsplash.com/600x300/?blog,tech&sig=${post.id}`}
                 alt={post.title}
                 className="w-full h-40 object-cover rounded-md mb-4"
-              />
+              />*/}
               <div className="mb-2 flex flex-wrap gap-1">
                 {post.tags.map((tag) => (
                   <span key={tag} className="text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-2 py-0.5 rounded-full uppercase font-medium">
