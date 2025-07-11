@@ -1,8 +1,19 @@
+import Hero from '@/components/Hero'
+import About from '@/components/About'
+import FeaturedPosts from '@/components/FeaturedPosts'
+import Categories from '@/components/Categories'
+import NewsletterCTA from '@/components/NewsletterCTA'
+import Footer from '@/components/Footer'
 
-export default function Home() {
+export default function HomePage() {
   return (
-   <div>
-    Hello World!
-   </div>
-  );
+    <>
+      <Hero />
+      <About />
+      <FeaturedPosts />
+      <Categories />
+      <NewsletterCTA />
+      <Footer />
+    </>
+  )
 }
