@@ -3,7 +3,6 @@ import About from '@/components/About'
 import FeaturedPosts from '@/components/FeaturedPosts'
 import Categories from '@/components/Categories'
 import NewsletterCTA from '@/components/NewsletterCTA'
-import Footer from '@/components/Footer'
 
 export default function HomePage() {
   return (
@@ -13,7 +12,6 @@ export default function HomePage() {
       <FeaturedPosts />
       <Categories />
       <NewsletterCTA />
-      <Footer />
     </>
   )
 }
