@@ -1,28 +1,37 @@
-export default function Categories() {
-  const topics = ['React', 'Next.js', 'JavaScript', 'UI/UX', 'Performance', 'Career']
+
+
+export default async function Categories() {
+  const res = await fetch(`https://dummyjson.com/posts/tag-list`);
+  const tags = await res.json();
+
+  const visibleTags = tags.slice(0, 6); // Show only first 6
 
   return (
     <section className="py-20 bg-white dark:bg-black px-6 sm:px-12">
-      <div className="max-w-4xl mx-auto text-center">
+      <div className="max-w-5xl mx-auto text-center">
         <h2 className="text-4xl font-extrabold mb-10 text-gray-900 dark:text-white tracking-tight">
           Explore Categories
         </h2>
-        <div className="flex flex-wrap justify-center gap-5">
-          {topics.map((topic) => (
-            <button
-              key={topic}
-              type="button"
-              className="cursor-pointer bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-700 dark:to-blue-900 
-                         text-white px-5 py-2.5 rounded-full font-semibold text-base shadow-md
-                         hover:from-blue-400 hover:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-800
-                         transition-colors duration-300
-                         focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50"
+
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {visibleTags.map((tag) => (
+            <span
+              key={tag}
+              className="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-5 py-2.5 rounded-full font-semibold text-sm shadow-md transition hover:scale-105"
             >
-              {topic}
-            </button>
+              {tag}
+            </span>
           ))}
         </div>
+
+        <a
+          href="/categories"
+          className="inline-block mt-2 text-blue-600 dark:text-blue-400 font-medium hover:underline text-sm transition"
+        >
+          View all categories →
+        </a>
       </div>
     </section>
-  )
+  );
 }
+
