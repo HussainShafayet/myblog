@@ -16,7 +16,7 @@ export default async function FeaturedPosts() {
           {posts.map((post) => (
             <Link
               key={post.id}
-              href={`/blog/${post.id}`}
+              href={`/posts/${post.id}`}
               className="group block bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-zinc-700 p-6 shadow-sm hover:shadow-lg hover:border-blue-500 transition-all duration-300 ease-in-out max-w-2xl mx-auto"
               aria-label={`Read more about ${post.title}`}
             >

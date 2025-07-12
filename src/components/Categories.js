@@ -2,14 +2,24 @@ export default function Categories() {
   const topics = ['React', 'Next.js', 'JavaScript', 'UI/UX', 'Performance', 'Career']
 
   return (
-    <section className="py-16 bg-white dark:bg-black px-4">
+    <section className="py-20 bg-white dark:bg-black px-6 sm:px-12">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl font-semibold mb-6">Explore Categories</h2>
-        <div className="flex flex-wrap justify-center gap-4">
+        <h2 className="text-4xl font-extrabold mb-10 text-gray-900 dark:text-white tracking-tight">
+          Explore Categories
+        </h2>
+        <div className="flex flex-wrap justify-center gap-5">
           {topics.map((topic) => (
-            <span key={topic} className="bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 px-4 py-2 rounded-full text-sm font-medium">
+            <button
+              key={topic}
+              type="button"
+              className="cursor-pointer bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-700 dark:to-blue-900 
+                         text-white px-5 py-2.5 rounded-full font-semibold text-base shadow-md
+                         hover:from-blue-400 hover:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-800
+                         transition-colors duration-300
+                         focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50"
+            >
               {topic}
-            </span>
+            </button>
           ))}
         </div>
       </div>

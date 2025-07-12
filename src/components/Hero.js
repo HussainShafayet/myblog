@@ -27,7 +27,7 @@ export default function Hero() {
         </p>
 
         <Link
-          href="/blog"
+          href="/posts"
           className="inline-block px-10 py-4 bg-blue-600 text-white text-lg font-semibold rounded-xl shadow-lg transition-transform transform hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
           aria-label="Explore the blog"
         >

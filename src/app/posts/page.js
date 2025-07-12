@@ -82,7 +82,7 @@ export default async function BlogPage({ searchParams }) {
           {/* Previous button */}
           {page > 1 && (
             <Link
-              href={`/blog?page=${page - 1}`}
+              href={`/posts?page=${page - 1}`}
               className="px-3 py-2 rounded-md bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white hover:bg-zinc-300 dark:hover:bg-zinc-600"
             >
               ← Prev
