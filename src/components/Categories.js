@@ -25,7 +25,7 @@ export default async function Categories() {
         </div>
 
         <a
-          href="/categories"
+          href="/posts"
           className="inline-block mt-2 text-blue-600 dark:text-blue-400 font-medium hover:underline text-sm transition"
         >
           View all categories →

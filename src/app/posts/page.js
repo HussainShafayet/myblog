@@ -1,9 +1,7 @@
-
-
 // app/blog/page.js
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import  getPosts  from '@/lib/getPosts'
+import getPosts from '@/lib/getPosts'
 
 export const metadata = {
   title: 'Blog',
@@ -12,64 +10,97 @@ export const metadata = {
 
 export default async function BlogPage({ searchParams }) {
   const page = parseInt(searchParams.page || '1')
+  if (isNaN(page) || page < 1) return notFound();
+  const currentTag = await searchParams.tag || null
 
-  // 🧠 Validate input
-  if (isNaN(page) || page < 1) return notFound()
-
-  // 🛠 Get post data
-  let postData
+  let postData, tags = []
   try {
     postData = await getPosts(page)
+
+    // 🧠 Fetch tags
+    const res = await fetch('https://dummyjson.com/posts/tag-list')
+    tags = await res.json()
   } catch {
     return notFound()
   }
 
   const { posts, totalPages } = postData
-
-  // ❌ If page exceeds totalPages, show 404
   if (page > totalPages) return notFound()
 
   return (
-    <main className="min-h-screen py-16 px-4 bg-zinc-50 dark:bg-zinc-900">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-zinc-900 dark:text-white">
-            Blog Posts
-          </h1>
-          <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-            Page {page} of {totalPages}
-          </p>
+     <main className="flex flex-col lg:flex-row gap-10 max-w-7xl mx-auto px-4 py-16">
+      {/* Sidebar */}
+      <aside className="hidden lg:block w-64 shrink-0">
+        <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">
+          <h2 className="text-xl font-bold mb-4 text-zinc-800 dark:text-white">Tags</h2>
+          <ul className="space-y-2">
+            {tags.map(tag => (
+              <li key={tag}>
+                <Link
+                  href={`/posts?tag=${tag}`}
+                  className={`block px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    currentTag === tag
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+                  }`}
+                >
+                  #{tag}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
+      </aside>
 
-        {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
+      {/* Main Content */}
+      <section className="flex-1">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map(post => (
             <Link
               key={post.id}
               href={`/blog/${post.id}`}
-              className="group bg-white dark:bg-zinc-800 rounded-xl p-5 shadow hover:shadow-lg border border-zinc-200 dark:border-zinc-700 transition"
+              className="group bg-gradient-to-br from-white to-zinc-50 dark:from-zinc-800 dark:to-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl p-6 shadow hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
             >
-              {/*<img
-                src={`https://source.unsplash.com/600x300/?blog,tech&sig=${post.id}`}
-                alt={post.title}
-                className="w-full h-40 object-cover rounded-md mb-4"
-              />*/}
-              <div className="mb-2 flex flex-wrap gap-1">
-                {post.tags.map((tag) => (
-                  <span key={tag} className="text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-2 py-0.5 rounded-full uppercase font-medium">
+              {/* Optional Image */}
+              {post.image && (
+                <div className="mb-4 overflow-hidden rounded-lg">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2 mb-3">
+                {post.tags.map(tag => (
+                  <span
+                    key={tag}
+                    className="text-xs uppercase font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-2 py-0.5 rounded-full"
+                  >
                     #{tag}
                   </span>
                 ))}
               </div>
-              <h2 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-blue-600">
+
+              {/* Title + Excerpt */}
+              <h2 className="text-lg font-semibold text-zinc-900 dark:text-white group-hover:text-blue-600 transition">
                 {post.title}
               </h2>
-              <p className="text-sm text-zinc-600 dark:text-zinc-300 line-clamp-3 mt-1">{post.body}</p>
-              <div className="mt-3 flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
+              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300 line-clamp-3">
+                {post.body}
+              </p>
+
+              {/* Divider */}
+              <hr className="my-4 border-zinc-200 dark:border-zinc-700" />
+
+              {/* Footer Info */}
+              <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
                 <span>👤 User #{post.userId}</span>
                 <span>👁️ {post.views} views</span>
               </div>
-              <div className="mt-1 text-sm text-zinc-500 dark:text-zinc-400 flex gap-4">
+              <div className="mt-1 text-sm flex gap-4 text-zinc-500 dark:text-zinc-400">
                 <span>👍 {post.reactions.likes}</span>
                 <span>👎 {post.reactions.dislikes}</span>
               </div>
@@ -77,24 +108,20 @@ export default async function BlogPage({ searchParams }) {
           ))}
         </div>
 
-        {/* Pagination controls */}
-        <div className="mt-12 flex flex-wrap justify-center items-center gap-2 text-sm font-medium">
-          {/* Previous button */}
+        {/* Pagination */}
+        <div className="mt-16 flex flex-wrap justify-center items-center gap-2 text-sm font-medium">
           {page > 1 && (
             <Link
-              href={`/posts?page=${page - 1}`}
-              className="px-3 py-2 rounded-md bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white hover:bg-zinc-300 dark:hover:bg-zinc-600"
+              href={`/blog?page=${page - 1}`}
+              className="px-4 py-2 rounded-full bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white hover:bg-zinc-300 dark:hover:bg-zinc-600 transition"
             >
               ← Prev
             </Link>
           )}
 
-          {/* Numbered page links */}
           {Array.from({ length: totalPages }, (_, i) => {
-            const pageNumber = i + 1;
-            const isActive = pageNumber === page;
-
-            // Show only nearby page numbers (e.g. +/- 2), plus first and last
+            const pageNumber = i + 1
+            const isActive = pageNumber === page
             if (
               pageNumber === 1 ||
               pageNumber === totalPages ||
@@ -104,18 +131,16 @@ export default async function BlogPage({ searchParams }) {
                 <Link
                   key={pageNumber}
                   href={`/blog?page=${pageNumber}`}
-                  className={`px-3 py-2 rounded-md ${
+                  className={`px-4 py-2 rounded-full transition ${
                     isActive
-                      ? "bg-blue-600 text-white"
-                      : "bg-zinc-100 dark:bg-zinc-700 text-zinc-800 dark:text-white hover:bg-zinc-200 dark:hover:bg-zinc-600"
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-800 dark:text-white hover:bg-zinc-200 dark:hover:bg-zinc-600'
                   }`}
                 >
                   {pageNumber}
                 </Link>
-              );
+              )
             }
-
-            // Ellipsis for skipped pages
             if (
               (pageNumber === page - 3 && pageNumber > 1) ||
               (pageNumber === page + 3 && pageNumber < totalPages)
@@ -127,24 +152,23 @@ export default async function BlogPage({ searchParams }) {
                 >
                   ...
                 </span>
-              );
+              )
             }
-
-            return null;
+            return null
           })}
 
-          {/* Next button */}
           {page < totalPages && (
             <Link
               href={`/blog?page=${page + 1}`}
-              className="px-3 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+              className="px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
             >
               Next →
             </Link>
           )}
         </div>
-      </div>
+      </section>
     </main>
+   
+
   )
 }
-
