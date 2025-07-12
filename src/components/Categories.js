@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 
 export default async function Categories() {
@@ -24,12 +25,12 @@ export default async function Categories() {
           ))}
         </div>
 
-        <a
+        <Link
           href="/posts"
           className="inline-block mt-2 text-blue-600 dark:text-blue-400 font-medium hover:underline text-sm transition"
         >
           View all categories →
-        </a>
+        </Link>
       </div>
     </section>
   );

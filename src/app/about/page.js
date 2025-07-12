@@ -10,7 +10,7 @@ export default function AboutPage() {
     <section className="max-w-4xl mx-auto px-6 py-16 space-y-14">
       {/* Header */}
       <header className="text-center space-y-3">
-        <h1 className="text-4xl font-bold tracking-tight">👋 Hey, I’m Shafayet</h1>
+        <h1 className="text-4xl font-bold tracking-tight">👋 Hey, I am Shafayet</h1>
         <p className="text-muted-foreground text-lg">
           Developer, learner, and curious mind behind this blog.
         </p>
@@ -18,13 +18,7 @@ export default function AboutPage() {
 
       {/* Profile Card */}
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-        <Image
-          src="/profile.jpg" // Replace with your image in public/
-          alt="Profile photo"
-          width={120}
-          height={120}
-          className="rounded-full object-cover"
-        />
+    
         <div className="text-base leading-relaxed text-gray-700 dark:text-gray-300">
           <p>
             I’m a frontend developer with a passion for clean design, modern web technologies,

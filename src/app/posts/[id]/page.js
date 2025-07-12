@@ -1,6 +1,7 @@
 import Comments from '@/components/Comments';
 import getComments from '@/lib/getComments';
 import getSinglePost from '@/lib/getSinglePost';
+import Link from 'next/link';
 import React, {Suspense} from 'react'
 
 const Blog = async ({params}) => {
@@ -86,12 +87,12 @@ const Blog = async ({params}) => {
 
         {/* Back link */}
         <div className="mt-10">
-          <a
+          <Link
             href="/"
             className="inline-block text-sm text-blue-600 hover:underline transition"
           >
             ← Back to home
-          </a>
+          </Link>
         </div>
       </article>
 

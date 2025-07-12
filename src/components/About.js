@@ -12,7 +12,7 @@ export default function About() {
         </h2>
 
         <p className="text-lg sm:text-xl text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-2xl mx-auto tracking-wide">
-          MyBlog is a <span className="font-semibold text-blue-600 dark:text-blue-400">friendly</span> place where I share web development tips, frontend tutorials, and thoughts on modern tech. Whether you're a beginner or a seasoned developer, you'll find something useful here.
+          MyBlog is a <span className="font-semibold text-blue-600 dark:text-blue-400">friendly</span> place where I share web development tips, frontend tutorials, and thoughts on modern tech. Whether you are a beginner or a seasoned developer, you will find something useful here.
         </p>
       </div>
     </section>

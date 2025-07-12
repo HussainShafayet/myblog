@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import getPosts from '@/lib/getPosts'
 import getTags from '@/lib/getTags';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'Blog',
@@ -36,7 +37,7 @@ export default async function BlogPage({ searchParams }) {
           >
             {post.image && (
               <div className="mb-4 overflow-hidden rounded-lg">
-                <img
+                <Image
                   src={post.image}
                   alt={post.title}
                   className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
