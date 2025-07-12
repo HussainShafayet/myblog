@@ -16,7 +16,7 @@ export default async function BlogPage({ searchParams }) {
   const currentTag =  searchParams.tag || null
 
   let postData, tagsData = []
-  postData = await getPosts(page);
+  postData = await getPosts(page, currentTag);
   tagsData = await getTags();
 
     
@@ -57,7 +57,7 @@ export default async function BlogPage({ searchParams }) {
           {posts.map(post => (
             <Link
               key={post.id}
-              href={`/blog/${post.id}`}
+              href={`/posts/${post.id}`}
               className="group bg-gradient-to-br from-white to-zinc-50 dark:from-zinc-800 dark:to-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl p-6 shadow hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
             >
               {/* Optional Image */}
@@ -129,7 +129,7 @@ export default async function BlogPage({ searchParams }) {
               return (
                 <Link
                   key={pageNumber}
-                  href={`/blog?page=${pageNumber}`}
+                  href={`?${currentTag ? `tag=${encodeURIComponent(currentTag)}&` : ''}page=${pageNumber}`}
                   className={`px-4 py-2 rounded-full transition ${
                     isActive
                       ? 'bg-blue-600 text-white'
