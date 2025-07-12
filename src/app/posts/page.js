@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import getPosts from '@/lib/getPosts'
+import getTags from '@/lib/getTags';
 
 export const metadata = {
   title: 'Blog',
@@ -9,22 +10,20 @@ export const metadata = {
 }
 
 export default async function BlogPage({ searchParams }) {
+  searchParams = await searchParams;
   const page = parseInt(searchParams.page || '1')
   if (isNaN(page) || page < 1) return notFound();
-  const currentTag = await searchParams.tag || null
+  const currentTag =  searchParams.tag || null
 
-  let postData, tags = []
-  try {
-    postData = await getPosts(page)
+  let postData, tagsData = []
+  postData = await getPosts(page);
+  tagsData = await getTags();
 
-    // 🧠 Fetch tags
-    const res = await fetch('https://dummyjson.com/posts/tag-list')
-    tags = await res.json()
-  } catch {
-    return notFound()
-  }
+    
+ 
 
-  const { posts, totalPages } = postData
+  const { posts, totalPages } = postData;
+  const {tags} = tagsData;
   if (page > totalPages) return notFound()
 
   return (
